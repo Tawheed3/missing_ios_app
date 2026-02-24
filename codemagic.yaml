@@ -8,27 +8,21 @@ workflows:
       flutter: stable
       xcode: latest
     scripts:
-      - name: تنظيف وتجديد بيئة iOS بالكامل
+      - name: تنظيف المشروع
         script: |
-          echo "=== البدء في التنظيف العميق ==="
-          # 1. تنظيف Flutter
           flutter clean
+          rm -rf ios/Podfile.lock ios/Pods ios/.symlinks
+          cd ios
+          pod cache clean --all
+          cd ..
           flutter pub get
 
-          # 2. حذف كل أثر لـ CocoaPods
+      - name: تثبيت Pods
+        script: |
           cd ios
-          rm -rf Podfile.lock
-          rm -rf Pods
-          rm -rf .symlinks
-          pod cache clean --all
-
-          # 3. إعادة تثبيت Pods من الصفر مع التأكد من وجود Flutter
           pod deintegrate
-          pod setup
           pod install --repo-update
           cd ..
-
-          echo "=== التنظيف وإعادة التثبيت اكتمل ==="
 
       - name: بناء التطبيق للمحاكي
         script: |
