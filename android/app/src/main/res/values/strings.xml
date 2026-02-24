@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">missing_app</string>
+
+    <!-- Facebook Configuration -->
+    <string name="facebook_app_id">4051941348282565</string>
+    <string name="fb_login_protocol_scheme">fb4051941348282565</string>
+
+    <!-- استبدل YOUR_FACEBOOK_APP_ID بمعرف تطبيقك من Facebook Developers -->
+</resources>
