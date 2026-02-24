@@ -1,0 +1,33 @@
+workflows:
+  ios-simulator-workflow:
+    name: iOS Simulator Build
+    environment:
+      vars:
+        XCODE_WORKSPACE: "ios/Runner.xcworkspace"
+        XCODE_SCHEME: "Runner"
+      flutter: stable
+      xcode: latest
+    scripts:
+      - name: تنظيف المشروع وحذف الملفات القديمة
+        script: |
+          flutter clean
+          rm -rf ios/Podfile.lock ios/Pods ios/.symlinks
+          cd ios
+          pod cache clean --all
+          cd ..
+      - name: الحصول على الحزم وتحديث Pods
+        script: |
+          flutter pub get
+          cd ios
+          pod repo update
+          pod install
+          cd ..
+      - name: بناء التطبيق للمحاكي
+        script: |
+          flutter build ios --debug --simulator
+    artifacts:
+      - build/ios/iphonesimulator/Runner.app
+    publishing:
+      email:
+        recipients:
+          - tawheedkortam1@gmail.com
